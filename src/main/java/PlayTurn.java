@@ -1,27 +1,37 @@
-public class PlayTurn<player> {
-    Dice dice = new Dice();
+public class PlayTurn {
 
-    int player=0;
+    private Dice dice = new Dice();
 
-    public PlayTurn(int player1)
-    {
-        player=player1;
+    private int score = 0;
+
+    public PlayTurn() {
+
     }
 
-    public void play()
-    {
+    public void play(Player player) {
+        boolean hasExtraTurn = false;
+        while (!hasExtraTurn) {
+            int result = dice.roll();
+            System.out.println(player.getName() + " rolled a " + result);
 
-        int result= dice.roll();
-        if (result==6)
-        {
-            play();
-        }else
-        {
-            System.out.println("Better luck in next round,player:"+player+"its your turn ");
+          if (result == 6) {
+                player.addScore(10);
+                System.out.println(player.getName()+ " scores 10 points! (Total: " + score + ")");
+                hasExtraTurn = true;
+              {
+                  play(player);// Grant one extra turn
+              }
+            } else if (result == 3) {
+                    player.subtractScore(5);
+                System.out.println(player.getName() + " loses 5 points! (Total: " + score + ")");
+            }
+
+
+            break;
+
         }
     }
 
 
-
-
 }
+
